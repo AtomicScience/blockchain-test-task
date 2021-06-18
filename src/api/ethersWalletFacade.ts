@@ -1,7 +1,8 @@
 import { BigNumber, ethers } from "ethers";
+import { Web3Provider } from "../react-app-env";
 import Token from "./token";
 import TokenBalance from "./tokenBalance";
-import TokenList from "./tokensList";
+import getTokensList from "./tokensList";
 
 export default class EthersWalletFacade {
     private ethereum : any;
@@ -16,7 +17,7 @@ export default class EthersWalletFacade {
         // TODO: check if the object is present
         this.ethereum = ethereum;
         this.web3Provider = new ethers.providers.Web3Provider(ethereum);
-        this.tokensList = TokenList;
+        this.tokensList = getTokensList(this.web3Provider.getSigner());
     }
 
     get isConnected() {
