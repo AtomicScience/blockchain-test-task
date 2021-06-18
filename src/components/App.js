@@ -2,7 +2,7 @@ import React from 'react';
 import '../assets/App.css';
 import ConnectButton from './connectButton';
 import InfoScreen from './infoScreen';
-import EthersWalletFacade from '../api/ethersWalletFacade';
+import EthersWalletFacade from '../api/balance/ethersWalletFacade';
 
 export default class App extends React.Component {
   constructor(props) {

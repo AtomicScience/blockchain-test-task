@@ -1,5 +1,5 @@
-import { Signer } from "../react-app-env";
-import ERC20ContractBuilder from "./erc20ContractBuilder";
+import { Signer } from "../../../react-app-env";
+import ERC20ContractBuilder from "../erc20ContractBuilder";
 import Token from "./token";
 
 function addContractToToken(token : Token, signer : Signer) : void {
