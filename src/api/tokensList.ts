@@ -2,7 +2,7 @@ import { Signer } from "../react-app-env";
 import ERC20ContractBuilder from "./erc20ContractBuilder";
 import Token from "./token";
 
-function addContractToToken(token : Token, signer : any) : void {
+function addContractToToken(token : Token, signer : Signer) : void {
     if(token.symbol === "ETH") return;
 
     if(token.contractAddress === "") { 
@@ -12,7 +12,7 @@ function addContractToToken(token : Token, signer : any) : void {
     token.contract = ERC20ContractBuilder(token.contractAddress, signer)
 }
 
-function getTokensList(signer : any) : Token[] {
+function getTokensList(signer : Signer) : Token[] {
     let tokens = [{
             symbol: "ETH",
             name: "Ethereum",
