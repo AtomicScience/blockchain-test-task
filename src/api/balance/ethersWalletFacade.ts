@@ -1,8 +1,8 @@
 import { BigNumber, ethers } from "ethers";
 import { Web3Provider } from "../../react-app-env";
-import Token from "./token/token";
-import TokenBalance from "./token/tokenBalance";
-import getTokensList from "./token/tokensList";
+import Token from "../token/token";
+import TokenBalance from "../token/tokenBalance";
+import getTokensList from "../token/tokensList";
 
 export default class EthersWalletFacade {
     private ethereum : any;
