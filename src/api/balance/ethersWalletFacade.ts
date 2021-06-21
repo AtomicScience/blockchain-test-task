@@ -66,7 +66,7 @@ export default class EthersWalletFacade {
     }
 
     private async getCustomTokenBalance(token : Token) : Promise<BigNumber> {
-        if(token.contract === undefined) throw "Error accessing contract for token " + token.name;
+        if(token.contract === undefined) throw new Error("Error accessing contract for token " + token.name);
 
         return token.contract.balanceOf(this.selectedAddress);
     }

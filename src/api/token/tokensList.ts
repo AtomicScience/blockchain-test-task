@@ -6,7 +6,7 @@ function addContractToToken(token : Token, signer : Signer) : void {
     if(token.symbol === "ETH") return;
 
     if(token.contractAddress === "") { 
-        throw "Contract address not defined for ERC20 currency " + token.symbol;
+        throw new Error("Contract address not defined for ERC20 currency " + token.symbol);
     }
 
     token.contract = ERC20ContractBuilder(token.contractAddress, signer)
