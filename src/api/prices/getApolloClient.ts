@@ -5,9 +5,9 @@ import {
     NormalizedCacheObject,
 } from "@apollo/client";
 
-let apolloClient : ApolloClient<NormalizedCacheObject> | null= null;
+let apolloClient : ApolloClient<NormalizedCacheObject> | null = null;
 
-export default function getApolloClient() : ApolloClient<NormalizedCacheObject>{
+export default function getApolloClient() : ApolloClient<NormalizedCacheObject> {
   if(apolloClient == null) {
     apolloClient = new ApolloClient({
       link: new HttpLink({
