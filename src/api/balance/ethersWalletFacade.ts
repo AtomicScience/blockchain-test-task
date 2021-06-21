@@ -40,6 +40,7 @@ export default class EthersWalletFacade {
         return this.status;
     }
 
+    // TODO: Handle each token individually
     public async getTokensBalance() : Promise<TokenBalance[]> {
         let tokenBalances = await Promise.all(this.tokensList.map(this.getBalanceForToken, this));
 
