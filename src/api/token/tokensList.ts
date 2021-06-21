@@ -12,6 +12,7 @@ function addContractToToken(token : Token, signer : Signer) : void {
     token.contract = ERC20ContractBuilder(token.contractAddress, signer)
 }
 
+// TODO: Split creation of tokens and token contracts
 function getTokensList(signer : Signer) : Token[] {
     let tokens = [{
             symbol: "ETH",
