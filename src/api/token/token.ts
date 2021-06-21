@@ -6,5 +6,4 @@ export default interface Token {
     decimals : number;
 
     contractAddress : string;
-    contract? : Contract;
 }

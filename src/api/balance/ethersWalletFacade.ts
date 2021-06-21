@@ -2,7 +2,8 @@ import { BigNumber, ethers } from "ethers";
 import { Web3Provider } from "../../react-app-env";
 import Token from "../token/token";
 import TokenBalance from "../token/tokenBalance";
-import getTokensList from "../token/tokensList";
+import tokensList from "../../config/tokens.json";
+import TokenContractsStorage from "../token/tokenContractsStorage";
 
 export default class EthersWalletFacade {
     private ethereum : any;
@@ -11,13 +12,13 @@ export default class EthersWalletFacade {
     private selectedAddress : string = "";
     private status : string = "Never connected";
     private web3Provider : Web3Provider;
-    private tokensList : Token[]
+    private contractStorage : TokenContractsStorage
 
     constructor(ethereum : any) {
         // TODO: check if the object is present
         this.ethereum = ethereum;
         this.web3Provider = new ethers.providers.Web3Provider(ethereum);
-        this.tokensList = getTokensList(this.web3Provider.getSigner());
+        this.contractStorage = new TokenContractsStorage(this.web3Provider.getSigner());
     }
 
     get isConnected() {
@@ -32,17 +33,13 @@ export default class EthersWalletFacade {
         return this.ethereum;
     }
 
-    get getTokensList() {
-        return this.tokensList.slice();
-    }
-
     get getStatus() {
         return this.status;
     }
 
     // TODO: Handle each token individually
     public async getTokensBalance() : Promise<TokenBalance[]> {
-        let tokenBalances = await Promise.all(this.tokensList.map(this.getBalanceForToken, this));
+        let tokenBalances = await Promise.all(tokensList.map(this.getBalanceForToken, this));
 
         return tokenBalances;
     }
@@ -67,9 +64,7 @@ export default class EthersWalletFacade {
     }
 
     private async getCustomTokenBalance(token : Token) : Promise<BigNumber> {
-        if(token.contract === undefined) throw new Error("Error accessing contract for token " + token.name);
-
-        return token.contract.balanceOf(this.selectedAddress);
+        return this.contractStorage.getContractFor(token).balanceOf(this.selectedAddress);
     }
 
     public async connectToWallet() : Promise<void> {

@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { ethers } from 'ethers';
 import React from 'react';
+import tokens from '../config/tokens.json'
 
 export default class Balance extends React.Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class Balance extends React.Component {
         this.wallet = props.wallet;
 
         this.state = {
-            tokensBalance: this.wallet.getTokensList.map(this.getStubBalanceEntry),
+            tokensBalance: tokens.map(this.getStubBalanceEntry),
         }
     }
 
