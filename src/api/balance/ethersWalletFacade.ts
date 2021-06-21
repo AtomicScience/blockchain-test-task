@@ -78,6 +78,7 @@ export default class EthersWalletFacade {
             .catch(this.handleConnectionError.bind(this));
     }
     
+    // TODO: implement listening to account and net swaps
     private handleAccountsChanged(accounts : string[]) {
         this.connected = true;
 
