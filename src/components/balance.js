@@ -36,6 +36,7 @@ export default class Balance extends React.Component {
         )
     }
 
+    // TODO: Move methods below into separate class    
     getFormattedTokenValue(balance) {
         if(!this.isBalanceEntryStub(balance)) {
             return ethers.utils.formatUnits(balance.balance, balance.token.decimals);
