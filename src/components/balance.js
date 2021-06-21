@@ -25,12 +25,21 @@ export default class Balance extends React.Component {
         return (
             <table>
                 <caption> Your tokens balance </caption>
-                <tbody>
-                    {tokensBalance.map(balance => (
-                        <tr key={balance.token.symbol}>
-                            <td> {balance.token.name} </td>
-                            <td> {this.getFormattedTokenValue(balance)} </td>
-                        </tr>       
+                <tbody> {
+                    tokensBalance.map((balance) => 
+                        this.getBalanceTableRow(balance)
+                    )
+                } </tbody>
+            </table>
+        )
+    }
+
+    getBalanceTableRow(balance) {
+        return(
+            <tr key={balance.token.symbol}>
+                <td> {balance.token.name} </td>
+                <td> {this.getFormattedTokenValue(balance)} </td>
+            </tr>
                     ))}
                 </tbody>
             </table>
