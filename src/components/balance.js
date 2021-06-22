@@ -25,11 +25,11 @@ export default class Balance extends React.Component {
         return (
             <table>
                 <caption> Your tokens balance </caption>
-                <tbody> {
+                <tbody>{
                     tokensBalance.map((balance) => 
                         this.getBalanceTableRow(balance)
                     )
-                } </tbody>
+                }</tbody>
             </table>
         )
     }

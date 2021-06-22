@@ -1,4 +1,3 @@
-import BigNumber from "bignumber.js";
 import React from "react"
 import ApolloPricesFacade from "../api/prices/apolloPricesFacade";
 import tokens from "../config/tokens.json"
