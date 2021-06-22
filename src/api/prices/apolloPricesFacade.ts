@@ -18,7 +18,7 @@ export default class ApolloPricesFacade {
 
     public queryMulpipleTokenPricesRelativeTo(tokens: Token[], pivot : Token) : Promise<TokenPrice>[] {
         let prices = [];
-        let pivotEthPrice = this.queryTokenPriceInEth(pivot);
+        let pivotEthPrice = this.queryTokenPriceInWei(pivot);
 
         for(let token of tokens) {
             prices.push(this.queryTokenPriceRelativeTo(token, pivotEthPrice));
@@ -28,10 +28,10 @@ export default class ApolloPricesFacade {
     }
 
     private async queryTokenPriceRelativeTo(token : Token, promisePivotEthPrice : Promise<BigNumber>) : Promise<TokenPrice> {
-        let tokenEthPrice = await this.queryTokenPriceInEth(token);
-        let pivotEthPrice = await promisePivotEthPrice;
+        let tokenWeiPrice = await this.queryTokenPriceInWei(token);
+        let pivotWeiPrice = await promisePivotEthPrice;
 
-        let relativePrice = tokenEthPrice.div(pivotEthPrice);
+        let relativePrice = tokenWeiPrice.div(pivotWeiPrice);
 
         return {
             token: token,
@@ -39,7 +39,7 @@ export default class ApolloPricesFacade {
         }
     }
 
-    private async queryTokenPriceInEth(token : Token) : Promise<BigNumber> {
+    private async queryTokenPriceInWei(token : Token) : Promise<BigNumber> {
         if(token.symbol === "ETH") return new BigNumber(1);
 
         let tokenPriceAsString = await this.makePriceQueryForERC20Token(token);
@@ -56,11 +56,14 @@ export default class ApolloPricesFacade {
             },
         });
 
-        return queryResult.data.tokens[0].derivedETH
+        return queryResult.data.tokens[0].derivedETH;
     }
 
     private async convertPriceToBigNumber(stringPrice : string, token : Token) {
         // TODO: Migrate all the code to bignumber.js
-        return new BigNumber(stringPrice).multipliedBy(token.decimals);
+        // TODO: Move Ethereum to the separate file
+        let power = new BigNumber(10).pow(18);
+
+        return new BigNumber(stringPrice).multipliedBy(power);
     }
 }
