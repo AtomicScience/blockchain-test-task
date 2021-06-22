@@ -1,10 +1,4 @@
 [{
-    "symbol": "ETH",
-    "name": "Ethereum",
-    "contractAddress": "",
-    "decimals": 18
-},
-{
     "symbol": "GLD",
     "name": "Gold test currency",
     "contractAddress": "0x77Df59E592ba75Cd7F889F76A9BbEBCc046750fa",

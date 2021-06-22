@@ -4,6 +4,7 @@ import {
 } from "@apollo/client";
 
 import { BigNumber } from "bignumber.js";
+import ethereum from "../ethereum";
 import Token from "../token";
 import getApolloClient from "./getApolloClient";
 import queries from "./priceQueries"
@@ -61,9 +62,6 @@ export default class ApolloPricesFacade {
 
     private async convertPriceToBigNumber(stringPrice : string, token : Token) {
         // TODO: Migrate all the code to bignumber.js
-        // TODO: Move Ethereum to the separate file
-        let power = new BigNumber(10).pow(18);
-
-        return new BigNumber(stringPrice).multipliedBy(power);
+        return new BigNumber(stringPrice).multipliedBy(ethereum.weiInEthereum);
     }
 }
