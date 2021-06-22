@@ -40,9 +40,6 @@ export default class Balance extends React.Component {
                 <td> {balance.token.name} </td>
                 <td> {this.getFormattedTokenValue(balance)} </td>
             </tr>
-                    ))}
-                </tbody>
-            </table>
         )
     }
 

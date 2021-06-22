@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 import { Web3Provider } from "../../react-app-env";
-import Token from "../token/token";
+import Token from "../token";
 import TokenBalance from "./tokenBalance";
 import tokensList from "../../config/tokens.json";
 import TokenContractsStorage from "./tokenContractsStorage";

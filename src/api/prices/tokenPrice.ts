@@ -1,7 +1,7 @@
-import Token from "../token/token"
+import { BigNumber } from "bignumber.js";
+import Token from "../token"
 
 export default interface TokenPrice {
-    queryStatus : string;
     token : Token;
-    ethereumPrice : string
+    ethereumPrice : BigNumber
 }

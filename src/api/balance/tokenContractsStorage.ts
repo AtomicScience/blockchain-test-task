@@ -1,6 +1,6 @@
 import { Contract, Signer } from "../../react-app-env";
 import ERC20ContractBuilder from "../balance/erc20ContractBuilder";
-import Token from "../token/token";
+import Token from "../token";
 
 export default class TokenContractsStorage {
     private contracts : {[tokenSymbol: string] : Contract};
