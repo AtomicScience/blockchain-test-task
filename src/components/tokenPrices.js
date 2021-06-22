@@ -1,6 +1,6 @@
 import React from "react"
 import ApolloPricesFacade from "../api/prices/apolloPricesFacade";
-import tokens from "../config/tokens.json"
+import tokens from "../api/tokensListManager"
 export default class TokenPrices extends React.Component {
     constructor(props) {
         super(props);

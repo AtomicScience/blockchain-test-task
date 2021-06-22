@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import { Web3Provider } from "../../react-app-env";
 import Token from "../token";
 import TokenBalance from "./tokenBalance";
-import tokensList from "../../config/tokens.json";
+import tokens from "../tokensListManager"
 import TokenContractsStorage from "./tokenContractsStorage";
 
 export default class EthersWalletFacade {
@@ -39,7 +39,7 @@ export default class EthersWalletFacade {
 
     // TODO: Handle each token individually
     public async getTokensBalance() : Promise<TokenBalance[]> {
-        let tokenBalances = await Promise.all(tokensList.map(this.getBalanceForToken, this));
+        let tokenBalances = await Promise.all(tokens.map(this.getBalanceForToken, this));
 
         return tokenBalances;
     }

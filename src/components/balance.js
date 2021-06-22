@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { ethers } from 'ethers';
 import React from 'react';
-import tokens from '../config/tokens.json'
+import tokens from "../api/tokensListManager"
 
 export default class Balance extends React.Component {
     constructor(props) {
