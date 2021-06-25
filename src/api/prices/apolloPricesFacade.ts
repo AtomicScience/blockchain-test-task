@@ -44,7 +44,7 @@ export default class ApolloPricesFacade {
         if(token.symbol === "ETH") return ethereum.weiInEthereum;
 
         let tokenPriceAsString = await this.makePriceQueryForERC20Token(token);
-        let tokenPriceInWei = this.convertPriceToBigNumber(tokenPriceAsString, token);
+        let tokenPriceInWei = this.convertPriceToBigNumber(tokenPriceAsString);
 
         return tokenPriceInWei;
     }
@@ -60,7 +60,7 @@ export default class ApolloPricesFacade {
         return queryResult.data.tokens[0].derivedETH;
     }
 
-    private async convertPriceToBigNumber(stringPrice : string, token : Token) {
+    private async convertPriceToBigNumber(stringPrice : string) {
         // TODO: Migrate all the code to bignumber.js
         return new BigNumber(stringPrice).multipliedBy(ethereum.weiInEthereum);
     }
