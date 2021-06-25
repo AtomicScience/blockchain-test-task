@@ -41,7 +41,7 @@ export default class ApolloPricesFacade {
     }
 
     private async queryTokenPriceInWei(token : Token) : Promise<BigNumber> {
-        if(token.symbol === "ETH") return new BigNumber(1);
+        if(token.symbol === "ETH") return ethereum.weiInEthereum;
 
         let tokenPriceAsString = await this.makePriceQueryForERC20Token(token);
         let tokenPriceInWei = this.convertPriceToBigNumber(tokenPriceAsString, token);
