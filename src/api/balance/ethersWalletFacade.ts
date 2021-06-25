@@ -3,7 +3,7 @@ import { Web3Provider } from "../../react-app-env";
 import Token from "../token";
 import TokenBalance from "./tokenBalance";
 import tokens from "../tokensListManager"
-import TokenContractsStorage from "./tokenContractsStorage";
+import TokenContractsStorage from "../contracts/tokenContractsStorage";
 
 export default class EthersWalletFacade {
     private ethereum : any;
