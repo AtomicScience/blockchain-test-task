@@ -18,11 +18,10 @@ export default class TokenPrices extends React.Component {
     }
 
     componentDidMount() {
-        for(let tokenPricePromise of this.pricesFacade.queryMulpipleTokenPricesRelativeTo(tokens, tokens[0])) {
+        let pivotToken = tokens[0];
+        for(let tokenPricePromise of this.pricesFacade.queryMulpipleTokenPricesRelativeTo(tokens, pivotToken)) {
             tokenPricePromise
-                .then((tokenPrice) => {
-                    this.handlePriceLoaded(tokenPrice)
-                })
+                .then((tokenPrice) => { this.handlePriceLoaded(tokenPrice) })
                 .catch(console.log)
         }
     }
