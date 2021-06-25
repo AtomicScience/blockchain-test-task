@@ -55,7 +55,7 @@ export default class EthersWalletFacade {
         if(token.symbol === "ETH") {
             return this.getEthereumBalance();
         } else {
-            return this.getCustomTokenBalance(token);
+            return this.getERC20TokenBalance(token);
         }
     }
 
@@ -63,7 +63,7 @@ export default class EthersWalletFacade {
         return this.web3Provider.getBalance(this.selectedAddress);
     }
 
-    private async getCustomTokenBalance(token : Token) : Promise<BigNumber> {
+    private async getERC20TokenBalance(token : Token) : Promise<BigNumber> {
         return this.contractStorage.getContractFor(token).balanceOf(this.selectedAddress);
     }
 
