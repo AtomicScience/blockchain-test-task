@@ -49,8 +49,12 @@ export default class EthersWalletFacade {
         try {
             tokenBalance = await this.getTokenBalance(token);
         } catch(error) {
-            // If the 'plain' error was caught, we should wrap it into token error
-            throw new TokenError(error, token)
+            if(error instanceof TokenError) {
+                throw error;    
+            } else {
+                // If the 'plain' error was caught, we should wrap it into token error
+                throw new TokenError(error, token);
+            }
         }
 
         return {
@@ -72,7 +76,9 @@ export default class EthersWalletFacade {
     }
 
     private async getERC20TokenBalance(token : Token) : Promise<BigNumber> {
-        return this.contractStorage.getContractFor(token).balanceOf(this.selectedAddress);
+        let contract = await this.contractStorage.getContractFor(token);
+
+        return contract.balanceOf(this.selectedAddress);
     }
 
     public async connectToWallet() : Promise<void> {
