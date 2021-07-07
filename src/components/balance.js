@@ -1,65 +1,71 @@
-import { BigNumber } from '@ethersproject/bignumber';
 import { ethers } from 'ethers';
 import React from 'react';
 import tokens from "../api/tokensListManager"
-
+import TokenError from '../api/tokenError';
+import LoadingError from './loadingError'
 export default class Balance extends React.Component {
     constructor(props) {
         super(props);
 
         this.wallet = props.wallet;
 
-        this.state = {
-            tokensBalance: tokens.map(this.getStubBalanceEntry),
+        this.state = {}
+    }
+
+    handleBalanceLoaded(tokenBalance) {
+        this.setState({[tokenBalance.token.symbol]: tokenBalance})
+    }
+
+    handleLoadingError(error) {
+        if(error instanceof TokenError) {
+            this.setState({[error.token.symbol]: error})
+        } else {
+            // TODO: add handling of non-token errors
         }
     }
 
     componentDidMount() {
-        this.wallet.getTokensBalance()
-            .then((tokensBalance) => this.setState({tokensBalance: tokensBalance}))
-            .catch((reason) => console.log(reason))
+        for(let balancePromise of this.wallet.getTokensBalance()) {
+            balancePromise
+                .then((tokenBalance) => this.handleBalanceLoaded(tokenBalance))
+                .catch((error) => this.handleLoadingError(error))
+        }
     }
 
-    render() {    
-        let tokensBalance = this.state.tokensBalance;
+    render() {
         return (
             <table>
                 <caption> Your tokens balance </caption>
                 <tbody>{
-                    tokensBalance.map((balance) => 
-                        this.getBalanceTableRow(balance)
+                    tokens.map((token) => 
+                        this.getBalanceTableRow(token)
                     )
                 }</tbody>
             </table>
         )
     }
 
-    getBalanceTableRow(balance) {
+    getBalanceTableRow(token) {
         return(
-            <tr key={balance.token.symbol}>
-                <td> {balance.token.name} </td>
-                <td> {this.getFormattedTokenValue(balance)} </td>
+            <tr key={token.symbol}>
+                <td> {token.name} </td>
+                <td> {this.getFormattedTokenValue(token)} </td>
             </tr>
         )
     }
 
     // TODO: Move methods below into separate class    
-    getFormattedTokenValue(balance) {
-        if(!this.isBalanceEntryStub(balance)) {
-            return ethers.utils.formatUnits(balance.balance, balance.token.decimals);
+    getFormattedTokenValue(token) {
+        let balanceOrError = this.state[token.symbol];
+        
+        if(balanceOrError === undefined) return "Loading...";
+
+        if("balance" in balanceOrError) { // balanceOrError is instance of TokenBalance
+            return ethers.utils.formatUnits(balanceOrError.balance, balanceOrError.token.decimals);
+        } else if(balanceOrError instanceof Error) {
+            return <LoadingError error={balanceOrError.message}></LoadingError>;
         } else {
             return "Loading...";
         }
-    }
-
-    getStubBalanceEntry(token) {
-        return ({
-            token: token,
-            balance: BigNumber.from(-1)
-        })
-    }
-
-    isBalanceEntryStub(balance) {
-        return balance.balance.lt(0);
     }
 }

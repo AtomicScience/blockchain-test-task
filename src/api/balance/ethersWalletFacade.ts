@@ -4,6 +4,7 @@ import Token from "../token";
 import TokenBalance from "./tokenBalance";
 import tokens from "../tokensListManager"
 import TokenContractsStorage from "../contracts/tokenContractsStorage";
+import TokenError from "../tokenError";
 
 export default class EthersWalletFacade {
     private ethereum : any;
@@ -37,17 +38,24 @@ export default class EthersWalletFacade {
         return this.status;
     }
 
-    // TODO: Handle each token individually
-    public async getTokensBalance() : Promise<TokenBalance[]> {
-        let tokenBalances = await Promise.all(tokens.map(this.getBalanceForToken, this));
+    public getTokensBalance() : Promise<TokenBalance>[] {
+        let tokenBalances = tokens.map(this.getBalanceForToken, this);
 
         return tokenBalances;
     }
 
     private async getBalanceForToken(token : Token) : Promise<TokenBalance> {
+        let tokenBalance;
+        try {
+            tokenBalance = await this.getTokenBalance(token);
+        } catch(error) {
+            // If the 'plain' error was caught, we should wrap it into token error
+            throw new TokenError(error, token)
+        }
+
         return {
             token: token,
-            balance: (await this.getTokenBalance(token)),
+            balance: tokenBalance,
         }
     }
 
