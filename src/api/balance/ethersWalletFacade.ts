@@ -16,7 +16,8 @@ export default class EthersWalletFacade {
     private contractStorage : TokenContractsStorage
 
     constructor(ethereum : any) {
-        // TODO: check if the object is present
+        if(ethereum === undefined) throw new Error("Metamask is not present on client")
+
         this.ethereum = ethereum;
         this.web3Provider = new ethers.providers.Web3Provider(ethereum);
         this.contractStorage = new TokenContractsStorage(this.web3Provider.getSigner());
