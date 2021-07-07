@@ -1,5 +1,6 @@
 import React from 'react';
 import '../assets/App.css';
+import '../assets/emoji.css'
 import ConnectButton from './connectButton';
 import InfoScreen from './infoScreen';
 import EthersWalletFacade from '../api/balance/ethersWalletFacade';
