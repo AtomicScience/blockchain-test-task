@@ -54,7 +54,7 @@ export default class EthersWalletFacade {
                 throw error;    
             } else {
                 // If the 'plain' error was caught, we should wrap it into token error
-                throw new TokenError(error, token);
+                throw new TokenError(String(error), token);
             }
         }
 
